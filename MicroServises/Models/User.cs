@@ -7,7 +7,7 @@ namespace MicroServises.UserService.Models
     {
         [BsonId]
         [BsonIgnoreIfDefault]
-        public ObjectId MyProperty { get; set; }
+        public ObjectId _id { get; set; }
         public string? Login { get; set; }
         public string? Password { get; set; }
     }
