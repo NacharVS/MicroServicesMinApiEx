@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 //app.Environment.EnvironmentName = "Production";
-app.UseMiddleware<CustomMiddleware>();
+//app.UseMiddleware<CustomMiddleware>("");
 
 
 
@@ -40,5 +40,20 @@ app.MapPost("/sendUser", (User user) => {
     
     });
 
+app.Run(async (context) =>
+{
+    if (context.Request.Cookies.ContainsKey("name"))
+    {
+        string name = context.Request.Cookies["name"];
+        await context.Response.WriteAsync($"Hi {name}");
+    }
+    else
+    {
+        context.Response.Cookies.Append("name", "Bob");
+        await context.Response.WriteAsync("hello");
+    }
+   
+
+});
 
 app.Run();
