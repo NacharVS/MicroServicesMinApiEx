@@ -7,7 +7,18 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
-app.UseStatusCodePages("", "Error Message");
+app.UseStatusCodePages( async statusContext =>
+{
+    var response = statusContext.HttpContext.Response;
+    var path = statusContext.HttpContext.Request.Path;
+
+    if(response.StatusCode == 403)
+    {
+        await response.WriteAsync(path);
+    }
+    else
+        await response.WriteAsync("Not found");
+});
 //app.Environment.EnvironmentName = "Production";
 
 
