@@ -7,18 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
-app.UseStatusCodePages( async statusContext =>
-{
-    var response = statusContext.HttpContext.Response;
-    var path = statusContext.HttpContext.Request.Path;
-
-    if(response.StatusCode == 403)
-    {
-        await response.WriteAsync(path);
-    }
-    else
-        await response.WriteAsync("Not found");
-});
+app.UseStatusCodePagesWithReExecute("/error/{0}");
 //app.Environment.EnvironmentName = "Production";
 
 
@@ -32,11 +21,14 @@ if (app.Environment.IsDevelopment())
     app.UseExceptionHandler("/error");
 }
 
-app.Map("/error", app => app.Run(async (context) =>
-{
-    context.Response.StatusCode = 500;
-    await context.Response.WriteAsync("opps! Something wrong!");
-})); 
+app.Map("/error/{statusCode}", (int statusCode) => $"Error. Status Code:{statusCode}");
+
+
+//app.Map("/error", app => app.Run(async (context) =>
+//{
+//    context.Response.StatusCode = 500;
+//    await context.Response.WriteAsync("opps! Something wrong!");
+//})); 
 
 app.MapGet("/", () => "Hello");
 
