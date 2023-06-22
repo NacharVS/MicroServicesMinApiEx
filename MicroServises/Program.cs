@@ -13,6 +13,11 @@ var app = builder.Build();
 
 app.UseSession();
 
+
+app.UseWhen(context => context.Request.Path == "/base", appBuilder =>
+{
+    appBuilder.Run(async subCuntext => await subCuntext.Response.WriteAsync("subMiddleware"));
+});
 //app.Environment.EnvironmentName = "Production";
 //app.UseMiddleware<CustomMiddleware>("");
 
