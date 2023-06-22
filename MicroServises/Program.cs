@@ -1,7 +1,7 @@
 using MicroServises.UserService;
 using MicroServises.UserService.Infrastructure;
 using MicroServises.UserService.Models;
-
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
@@ -10,7 +10,7 @@ builder.Services.AddSession();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
-
+app.UseSession();
 
 //app.Environment.EnvironmentName = "Production";
 //app.UseMiddleware<CustomMiddleware>("");
@@ -45,10 +45,10 @@ app.MapPost("/sendUser", (User user) => {
 
 app.Run(async (context) =>
 {
-    if (context.Request.Cookies.ContainsKey("name"))
+    if (context.Session.Keys.Contains("user"))
     {
-        string name = context.Request.Cookies["name"];
-        await context.Response.WriteAsync($"Hi {name}");
+        User user = context.Session.Get<User>("user");
+        await context.Response.WriteAsync($"Hi {user.Name}");
     }
     else
     {
@@ -60,3 +60,9 @@ app.Run(async (context) =>
 });
 
 app.Run();
+
+class User
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
