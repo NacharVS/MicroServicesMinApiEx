@@ -43,6 +43,7 @@ Core:
 			- Password
 			- GivenName
 			- CashAccount
+			- CardId
 	Interfaces:
 		 - IClientRepo
 	Infrastructure:
@@ -51,3 +52,5 @@ Core:
 	Controllers: 
 		 - ClientController
 			- CRUD
+
+DiscauntCardService
