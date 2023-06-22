@@ -1,3 +1,4 @@
+using MicroServises.UserService;
 using MicroServises.UserService.Infrastructure;
 using MicroServises.UserService.Models;
 
@@ -7,9 +8,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
-app.UseStatusCodePagesWithReExecute("/error/{0}");
-//app.Environment.EnvironmentName = "Production";
 
+//app.Environment.EnvironmentName = "Production";
+app.UseMiddleware<CustomMiddleware>();
 
 
 
@@ -30,7 +31,7 @@ app.Map("/error/{statusCode}", (int statusCode) => $"Error. Status Code:{statusC
 //    await context.Response.WriteAsync("opps! Something wrong!");
 //})); 
 
-app.MapGet("/", () => "Hello");
+//app.MapGet("/", () => "Hello");
 
 app.MapGet("/getUser/{login}", (string login) => MongoDBContext.GetByName(login));
 
@@ -38,5 +39,6 @@ app.MapPost("/sendUser", (User user) => {
     MongoDBContext.Add(user);
     
     });
+
 
 app.Run();
