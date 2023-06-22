@@ -16,7 +16,9 @@ app.UseSession();
 //app.Environment.EnvironmentName = "Production";
 //app.UseMiddleware<CustomMiddleware>("");
 
-var options = new RewriteOptions().AddRedirect("home[/]?$", "home/index" );
+var options = new RewriteOptions()
+    .AddRedirect("home[/]?$", "home/index")
+    .AddRewrite("home/index", "home/controller", skipRemainingRules:false);
 app.UseRewriter(options);
 
 if (app.Environment.IsDevelopment())
@@ -37,7 +39,7 @@ app.Map("/error/{statusCode}", (int statusCode) => $"Error. Status Code:{statusC
 
 app.MapGet("/home", () => "Hello");
 app.MapGet("/home/index", () => "Hello");
-
+app.MapGet("/home/controller", () => "Hi !");
 app.MapGet("/getUser/{login}", (string login) => MongoDBContext.GetByName(login));
 
 app.MapPost("/sendUser", (User user) => {
