@@ -8,8 +8,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
+//app.Environment.EnvironmentName = "Production";
 
-app.UseDeveloperExceptionPage();
 
 
 
@@ -18,9 +18,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
+    app.UseExceptionHandler("/error");
 }
 
+app.Map("/error", app => app.Run(async (context) =>
+{
+    context.Response.StatusCode = 500;
+    await context.Response.WriteAsync("opps! Something wrong!");
+})); 
 
 app.MapGet("/", () => "Hello");
 
