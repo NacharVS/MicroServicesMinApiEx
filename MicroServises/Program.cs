@@ -5,9 +5,12 @@ using MicroServises.UserService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
+
+
 
 //app.Environment.EnvironmentName = "Production";
 //app.UseMiddleware<CustomMiddleware>("");
