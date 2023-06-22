@@ -1,0 +1,53 @@
+UserService:
+	Core:
+		User:
+		 - id;
+		 - Login;
+		 - Password;
+		 - GivenName;
+		 - Vacancy;
+	Interfaces:
+		 - IUserRepo:
+			-CRUD
+	Infrastructure:
+		 - UserDbContext;
+		 - UserRepo;
+	Controllers: 
+		 - UserController; 
+
+
+BookService:
+	
+	Core:
+		- Book:
+			- id
+			- Name
+			- Year
+			- Author
+	Interfaces:
+		 - IBookRepo
+	Infrastructure:
+		 - BookDBContext
+		 - Bookrepo
+	Controllers: 
+		 - BookController
+			- CRUD
+		 
+
+ClientService:
+
+Core:
+		- Client:
+			- id
+			- Login
+			- Password
+			- GivenName
+			- CashAccount
+	Interfaces:
+		 - IClientRepo
+	Infrastructure:
+		 - ClientDBContext
+		 - Clientrepo
+	Controllers: 
+		 - ClientController
+			- CRUD
