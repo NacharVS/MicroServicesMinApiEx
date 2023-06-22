@@ -7,7 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
-
+app.UseStatusCodePages("", "Error Message");
 //app.Environment.EnvironmentName = "Production";
 
 
@@ -35,12 +35,5 @@ app.MapPost("/sendUser", (User user) => {
     MongoDBContext.Add(user);
     
     });
-app.Run(async (context) =>
-{
-    int[]qq = new int[10];
-    for (int i = 0; i < 20; i++)
-    {
-        qq[i] = 1;
-    }
-});
+
 app.Run();
