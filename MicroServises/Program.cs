@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseExceptionHandler("/error");
 }
 
-app.Map("/error/{statusCode}", (int statusCode) => $"Error. Status Code:{statusCode}");
+app.Map("/error/{statusCode:alpha}", (int statusCode) => $"Error. Status Code:{statusCode}");
 
 
 //app.Map("/error", app => app.Run(async (context) =>
